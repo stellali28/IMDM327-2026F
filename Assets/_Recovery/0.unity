@@ -176,9 +176,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a2cff10c2ebb124fb6542b9a6d2d677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyThreeBody
-  minimumDistance: 500
+  minimumDistance: 209
   fasterTime: 2
-  separationForce: 1.5
+  separationForce: 10
 --- !u!1 &889091085
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +431,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1602078847}
   - component: {fileID: 1602078846}
-  - component: {fileID: 1602078848}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -519,35 +518,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!114 &1602078848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602078845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_CustomShadowLayers: 0
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 0
-  m_RenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_ShadowRenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_Version: 4
-  m_LightLayerMask: 1
-  m_ShadowLayerMask: 1
-  m_RenderingLayers: 1
-  m_ShadowRenderingLayers: 1
 --- !u!1 &1649003498
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,7 +579,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1830620065
 Transform:
   m_ObjectHideFlags: 0
