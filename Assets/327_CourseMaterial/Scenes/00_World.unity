@@ -149,6 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b76a7ad8299e8a846b9f1be0570659b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThreeBody
+  minimumDistance: 1
+  fasterTime: 1
+  separationForce: 1
 --- !u!4 &225650842
 Transform:
   m_ObjectHideFlags: 0
@@ -432,6 +435,7 @@ GameObject:
   - component: {fileID: 1602078847}
   - component: {fileID: 1602078846}
   - component: {fileID: 1602078848}
+  - component: {fileID: 1602078849}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -548,8 +552,8 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1 &1649003498
-GameObject:
+--- !u!45 &1602078849
+Skybox:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}

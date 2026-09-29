@@ -1,13 +1,18 @@
 // 3-body Starter Code
 // Fall 2026. IMDM 327
 // Instructor. Myungin Lee
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class ThreeBody : MonoBehaviour
 {
-    private const float G = 500f; // Gravitational constant for this simulation, not the real-world value.
+    private const float G = 200f; // Gravitational constant for this simulation, not the real-world value.
+    public float minimumDistance = 1f;
+    public float fasterTime = 1f;
+    public float separationForce = 1f;
+    
     BodyProperty[] bp;
-    private int numberOfSphere = 3;
+    private int numberOfSphere = 100;
     class BodyProperty // why struct?
     {                   // https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/choosing-between-class-and-struct
         public GameObject body;
@@ -15,7 +20,6 @@ public class ThreeBody : MonoBehaviour
         public Vector3 velocity;
         public Vector3 acceleration;
     }
-
 
     void Start()
     {
@@ -34,7 +38,10 @@ public class ThreeBody : MonoBehaviour
             // position is (x,y,z). In this case, I want to plot them on the circle with r
 
             // ******** Fill in this part ********
-            // bp[i].body.transform.position = new Vector3( ***, *** , 180);
+            float theta = 2 * Mathf.PI / numberOfSphere * i;
+            bp[i].body.transform.position = new Vector3(r * Mathf.Cos(theta) + Random.Range(-10, 10), 
+                                                        r * Mathf.Sin(theta) + Random.Range(-10, 10), 
+                                                        180 + Random.Range(-10, 10));
             // z = 180 places the bodies in front of a camera near the origin looking along +Z. Try other positions too.
 
             bp[i].velocity = Vector3.zero; // Try different initial condition
@@ -69,6 +76,7 @@ public class ThreeBody : MonoBehaviour
 
     void Update()
     {
+        /*
         // Loop for N-body gravity
         // How should we design the loop?
 
@@ -86,7 +94,51 @@ public class ThreeBody : MonoBehaviour
         // 02. Loop through each body to update its velocity and position based on the calculated acceleration
        for (int i = 0; i < numberOfSphere; i++)
         {
-            // Something
+            for (int j = 0; j < numberOfSphere; j++)
+            {
+                bp[i].acceleration = Vector3.zero;
+                if (j != i)
+                {
+                    Vector3 distance = bp[i].body.transform.position - bp[j].body.transform.position;
+                    //gravity
+                    Vector3 gravity = CalculateGravity(distance, bp[i].mass, bp[j].mass);
+                    //acceleration
+                    bp[i].acceleration += gravity / bp[i].mass;
+                }
+            }
+
+            //position
+            bp[i].body.transform.position += bp[i].velocity * Time.deltaTime * 30f;
+            //velocity
+            bp[i].velocity = bp[i].acceleration * Time.deltaTime * 30f;
+            */
+
+        //new value of acceleration of every frame
+        for (int i = 0; i < numberOfSphere; i++) { 
+            bp[i].acceleration = Vector3.zero;
+        }
+
+        for (int i = 0; i < numberOfSphere; i++) {
+            for (int j = i + 1; j < numberOfSphere; j++)
+            {
+                Vector3 distance = bp[i].body.transform.position - bp[j].body.transform.position;
+                Vector3 gravity = CalculateGravity(distance, bp[i].mass, bp[j].mass);
+                bp[i].acceleration -= gravity / bp[i].mass;
+                bp[j].acceleration += gravity / bp[j].mass;
+
+                if (distance.magnitude < minimumDistance)
+                {
+                    bp[i].acceleration = separationForce * gravity / bp[i].mass;
+                    bp[i].acceleration = separationForce * gravity / bp[j].mass;
+                }
+
+            }
+        }
+
+        for (int i = 0; i < numberOfSphere; i++)
+        {
+            bp[i].velocity += bp[i].acceleration * Time.deltaTime * fasterTime;
+            bp[i].body.transform.position += bp[i].velocity * Time.deltaTime * fasterTime;
         }
     }
 
@@ -94,8 +146,8 @@ public class ThreeBody : MonoBehaviour
     private Vector3 CalculateGravity(Vector3 distanceVector, float m1, float m2)
     {
         Vector3 gravity = Vector3.zero; // note this is also Vector3
-                                        // **** Fill in the function below. 
-                                        // gravity = ****;
+                                        // **** Fill in the function below
+        gravity = G * m1 * m2 / (distanceVector.sqrMagnitude) * distanceVector.normalized;
         return gravity;
     }
 }
